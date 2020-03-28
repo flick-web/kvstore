@@ -1,6 +1,10 @@
-package kvstore
+package kvstore_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/flick-web/kvstore"
+)
 
 type testObj struct {
 	X map[string]string
@@ -9,13 +13,13 @@ type testObj struct {
 }
 
 func TestSqliteStore(t *testing.T) {
-	memDB := NewMemoryStore()
-	sqliteDB, err := NewSqliteDB("keyvalue.db")
+	memDB := kvstore.NewMemoryStore()
+	sqliteDB, err := kvstore.NewSqliteDB("keyvalue.db")
 	if err != nil {
 		t.Error(err)
 	}
 
-	dbs := []KeyValueStore{sqliteDB, memDB}
+	dbs := []kvstore.KeyValueStore{sqliteDB, memDB}
 	for _, db := range dbs {
 		testVal := testObj{
 			X: map[string]string{"one": "1", "two": "2"},
@@ -32,7 +36,7 @@ func TestSqliteStore(t *testing.T) {
 		if err == nil {
 			t.Error("Expected ErrKeyNotFound error")
 		}
-		if err != ErrKeyNotFound {
+		if err != kvstore.ErrKeyNotFound {
 			t.Error(err)
 		}
 
