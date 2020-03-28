@@ -22,13 +22,13 @@ func TestSqliteStore(t *testing.T) {
 			Y: "Hello!",
 			Z: 42,
 		}
-		err = db.SetObject("test", "12345", testVal)
+		err = db.Set("test", "12345", testVal)
 		if err != nil {
 			t.Error(err)
 		}
 
 		out := testObj{}
-		err = db.GetObject("test", "67890", &out)
+		err = db.Get("test", "67890", &out)
 		if err == nil {
 			t.Error("Expected ErrKeyNotFound error")
 		}
@@ -36,7 +36,7 @@ func TestSqliteStore(t *testing.T) {
 			t.Error(err)
 		}
 
-		err = db.GetObject("test", "12345", &out)
+		err = db.Get("test", "12345", &out)
 		if err != nil {
 			t.Error(err)
 		}
@@ -44,6 +44,6 @@ func TestSqliteStore(t *testing.T) {
 			t.Error("Objects did not match")
 		}
 
-		db.DeleteObject("test", "12345")
+		db.Delete("test", "12345")
 	}
 }

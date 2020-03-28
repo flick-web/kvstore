@@ -8,9 +8,9 @@ import "errors"
 // is no requirement that a type that implements this interface must support
 // persistence.
 type KeyValueStore interface {
-	SetObject(hashKey, rangeKey string, value interface{}) error
-	GetObject(hashKey, rangeKey string, result interface{}) error
-	DeleteObject(hashKey, rangeKey string) error
+	Get(hashKey, rangeKey string, result interface{}) error
+	Set(hashKey, rangeKey string, value interface{}) error
+	Delete(hashKey, rangeKey string) error
 }
 
 // ErrKeyNotFound is returned when a value could not be found for the specified key.

@@ -18,8 +18,8 @@ func NewMemoryStore() *MemoryStore {
 	}
 }
 
-// SetObject creates or updates the key-value pair.
-func (kv *MemoryStore) SetObject(table, id string, value interface{}) error {
+// Set creates or updates the key-value pair.
+func (kv *MemoryStore) Set(table, id string, value interface{}) error {
 	gobBuffer := new(bytes.Buffer)
 	gobEncoder := gob.NewEncoder(gobBuffer)
 	err := gobEncoder.Encode(value)
@@ -32,8 +32,8 @@ func (kv *MemoryStore) SetObject(table, id string, value interface{}) error {
 	return nil
 }
 
-// GetObject retrieves and decodes the stored value into result.
-func (kv *MemoryStore) GetObject(table, id string, result interface{}) (err error) {
+// Get retrieves and decodes the stored value into result.
+func (kv *MemoryStore) Get(table, id string, result interface{}) (err error) {
 	key := [2]string{table, id}
 	valBytes, ok := kv.items[key]
 	if !ok {
@@ -46,8 +46,8 @@ func (kv *MemoryStore) GetObject(table, id string, result interface{}) (err erro
 	return err
 }
 
-// DeleteObject removes an object from the database.
-func (kv *MemoryStore) DeleteObject(table, id string) (err error) {
+// Delete removes an object from storage.
+func (kv *MemoryStore) Delete(table, id string) (err error) {
 	key := [2]string{table, id}
 	_, ok := kv.items[key]
 	if !ok {
